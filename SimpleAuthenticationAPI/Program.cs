@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SimpleAuthenticationAPI.Services;
 using SimpleAuthenticationAPI.Services.Authorization;
+using SimpleAuthenticationAPI.Services.Repositories;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +15,7 @@ var tokenSecret = builder.Configuration["Jwt"];
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -37,6 +37,9 @@ builder.Services.AddAuthorization(o =>
 });
 
 builder.Services.AddScoped<IAuthorizationHandler, RoleRequirementHandler>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordManager, PasswordManager>();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
