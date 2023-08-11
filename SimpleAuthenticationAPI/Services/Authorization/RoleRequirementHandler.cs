@@ -12,6 +12,7 @@ namespace SimpleAuthenticationAPI.Services.Authorization
             if (!user.Identity.IsAuthenticated)
             {
                 context.Fail();
+                return;
             }
 
             var resource = context.Resource as DefaultHttpContext;
@@ -21,11 +22,17 @@ namespace SimpleAuthenticationAPI.Services.Authorization
 
             Enum.TryParse(typeof(Role), userRole, out object currentRole);
             if (currentRole == null)
+            {
                 context.Fail();
+                return;
+            }
+               
+               
 
             if (!attribute.Roles.Contains((Role)currentRole))
+            {
                 context.Fail();
-            
+            }
             context.Succeed(requirement);
         }
     }
