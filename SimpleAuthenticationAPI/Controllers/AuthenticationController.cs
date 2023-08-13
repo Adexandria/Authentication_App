@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleAuthenticationAPI.Models;
+using SimpleAuthenticationAPI.Models.DTOs;
 using SimpleAuthenticationAPI.Services.Authorization;
 using SimpleAuthenticationAPI.Services.Repositories;
 
@@ -14,13 +14,15 @@ namespace SimpleAuthenticationAPI.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordManager _passwordManager;
-        public AuthenticationController(IUserRepository userRepository,IPasswordManager passwordManager)
+        private readonly IAuthRepository _authRepository;
+        public AuthenticationController(IUserRepository userRepository,IPasswordManager passwordManager, IAuthRepository authRepository)
         {
             _userRepository = userRepository;
             _passwordManager = passwordManager;
+            _authRepository = authRepository;
         }
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpPost("user/sign-up")]
         public async Task<IActionResult> SignUpUser(CreateUserDTO newUser)
         {
@@ -35,7 +37,7 @@ namespace SimpleAuthenticationAPI.Controllers
             if (!response)
                 return BadRequest("Failed to create user");
 
-            return Ok();
+            return Ok("Successful");
         }
         
         [HasRole(Role.Admin)]
@@ -53,12 +55,12 @@ namespace SimpleAuthenticationAPI.Controllers
             if (!response)
                 return BadRequest("Failed to create user");
 
-            return Ok();
+            return Ok("Successful");
         }
 
         [AllowAnonymous]
         [HttpPost("sign-in")]
-        public async Task<IActionResult> Login(LoginDTO login)
+        public async Task<IActionResult> SignIn(LoginDTO login)
         {
             var user = await _userRepository.GetUserByEmail(login.Email);
             if (user == null)
@@ -68,7 +70,11 @@ namespace SimpleAuthenticationAPI.Controllers
             if (!hashedPassword)
                 return BadRequest("Invalid email or password");
 
-            return Ok($"Welcome {user.FirstName}");
+            var generatedToken = _authRepository.GenerateAccessToken(user.Id, user.Role.ToString());
+            
+            var userDTO = new UserDTO(user.FirstName, user.LastName, generatedToken);
+            
+            return Ok(userDTO);
         }
     }
 }
