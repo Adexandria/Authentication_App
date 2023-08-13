@@ -24,6 +24,5 @@
         public string Salt { get; protected set; }
         public string Email { get; set; }
         public Role Role { get; set; }
-        public AccessToken AccessToken { get; protected set; }
     }
 }

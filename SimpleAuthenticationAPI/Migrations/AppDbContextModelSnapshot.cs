@@ -22,27 +22,6 @@ namespace SimpleAuthenticationAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SimpleAuthenticationAPI.Models.AccessToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("AccessTokens");
-                });
-
             modelBuilder.Entity("SimpleAuthenticationAPI.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -75,23 +54,6 @@ namespace SimpleAuthenticationAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("SimpleAuthenticationAPI.Models.AccessToken", b =>
-                {
-                    b.HasOne("SimpleAuthenticationAPI.Models.User", "User")
-                        .WithOne("AccessToken")
-                        .HasForeignKey("SimpleAuthenticationAPI.Models.AccessToken", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SimpleAuthenticationAPI.Models.User", b =>
-                {
-                    b.Navigation("AccessToken")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
