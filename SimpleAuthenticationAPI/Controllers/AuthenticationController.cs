@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleAuthenticationAPI.Models;
 using SimpleAuthenticationAPI.Models.DTOs;
@@ -12,7 +13,7 @@ namespace SimpleAuthenticationAPI.Controllers
     /// </summary>
     [Route("api/authentication")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AuthenticationController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -97,7 +98,7 @@ namespace SimpleAuthenticationAPI.Controllers
 
             var generatedToken = _authRepository.GenerateAccessToken(user.Id, user.Role.ToString());
             
-            var userDTO = new UserDTO(user.FirstName, user.LastName, generatedToken);
+            var userDTO = new UserTokenDTO(user.FirstName, user.LastName, generatedToken);
             
             return Ok(userDTO);
         }
