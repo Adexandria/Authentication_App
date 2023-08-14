@@ -82,7 +82,7 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
-await SeedDatabase.IsSeeded(builder.Services.BuildServiceProvider(),defaultConfiguration);
+await SeedDatabase.SeedDefaultConfiguration(builder.Services.BuildServiceProvider(),defaultConfiguration);
 
 var app = builder.Build();
 

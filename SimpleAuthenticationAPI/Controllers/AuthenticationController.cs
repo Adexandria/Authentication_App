@@ -7,6 +7,9 @@ using SimpleAuthenticationAPI.Services.Repositories;
 
 namespace SimpleAuthenticationAPI.Controllers
 {
+    /// <summary>
+    /// Manages the authentication interactions
+    /// </summary>
     [Route("api/authentication")]
     [ApiController]
     [Authorize]
@@ -15,6 +18,13 @@ namespace SimpleAuthenticationAPI.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IPasswordManager _passwordManager;
         private readonly IAuthRepository _authRepository;
+
+        /// <summary>
+        /// A constructor
+        /// </summary>
+        /// <param name="userRepository">An instance to manage the operations of a user</param>
+        /// <param name="passwordManager">An instance to manage passwords of a user</param>
+        /// <param name="authRepository">An instance to create token for the user</param>
         public AuthenticationController(IUserRepository userRepository,IPasswordManager passwordManager, IAuthRepository authRepository)
         {
             _userRepository = userRepository;
@@ -22,6 +32,11 @@ namespace SimpleAuthenticationAPI.Controllers
             _authRepository = authRepository;
         }
 
+        /// <summary>
+        /// Sign ups a user with a user role
+        /// </summary>
+        /// <param name="newUser">An object used to create a new user</param>
+        /// <returns>An Action result</returns>
         [AllowAnonymous]
         [HttpPost("user/sign-up")]
         public async Task<IActionResult> SignUpUser(CreateUserDTO newUser)
@@ -39,7 +54,12 @@ namespace SimpleAuthenticationAPI.Controllers
 
             return Ok("Successful");
         }
-        
+
+        /// <summary>
+        /// Sign ups a user with a user role
+        /// </summary>
+        /// <param name="newUser">An object used to create a new user</param>
+        /// <returns>An Action result</returns>
         [HasRole(Role.Admin)]
         [HttpPost("admin/sign-up")]
         public async Task<IActionResult> SignUpAdmin(CreateUserDTO newUser)
@@ -58,15 +78,20 @@ namespace SimpleAuthenticationAPI.Controllers
             return Ok("Successful");
         }
 
+        /// <summary>
+        /// Sign in user. This includes all roles
+        /// </summary>
+        /// <param name="loginDTO">An object used to login users</param>
+        /// <returns>An Action result</returns>
         [AllowAnonymous]
         [HttpPost("sign-in")]
-        public async Task<IActionResult> SignIn(LoginDTO login)
+        public async Task<IActionResult> SignIn(LoginDTO loginDTO)
         {
-            var user = await _userRepository.GetUserByEmail(login.Email);
+            var user = await _userRepository.GetUserByEmail(loginDTO.Email);
             if (user == null)
                 return BadRequest("Invalid email or password");
 
-            var hashedPassword = _passwordManager.VerifyPassword(login.Password, user.PasswordHash, user.Salt);
+            var hashedPassword = _passwordManager.VerifyPassword(loginDTO.Password, user.PasswordHash, user.Salt);
             if (!hashedPassword)
                 return BadRequest("Invalid email or password");
 

@@ -3,14 +3,27 @@ using SimpleAuthenticationAPI.Services.Repositories;
 
 namespace SimpleAuthenticationAPI.Services
 {
+    /// <summary>
+    /// Creates and seed database if not seeded
+    /// </summary>
     public static class SeedDatabase
     {
-        public static async Task IsSeeded(IServiceProvider provider,DefaultConfiguration defaultConfig)
+        /// <summary>
+        /// Seed configuration of the admin
+        /// </summary>
+        /// <param name="provider">In builder provider to get registered services</param>
+        /// <param name="defaultConfig">Includes details to seed</param>
+        /// <exception cref="NullReferenceException">If the services are not registered</exception>
+        public static async Task SeedDefaultConfiguration(IServiceProvider provider,DefaultConfiguration defaultConfig)
         {
+            var dbContext = provider.GetService<AppDbContext>() ?? throw new NullReferenceException("Unregistered service");
+            
             var userRepository = provider.GetService<IUserRepository>() ?? throw new NullReferenceException("Unregistered service");
             
             var passwordManager = provider.GetService<IPasswordManager>()?? throw new NullReferenceException("Unregistered service");
             
+            dbContext.Database.EnsureCreated();
+
             var isExist = await userRepository.ExistsAsync(defaultConfig.Email);
             
             if (isExist)

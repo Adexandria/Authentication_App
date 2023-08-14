@@ -4,8 +4,17 @@ using System.Security.Claims;
 
 namespace SimpleAuthenticationAPI.Services.Authorization
 {
+    /// <summary>
+    /// A custom requirement handler
+    /// </summary>
     public class RoleRequirementHandler : AuthorizationHandler<RoleRequirement>
     {
+        /// <summary>
+        /// Check if the user is authroized 
+        /// and also check if the user has access to the endpoint
+        /// </summary>
+        /// <param name="context">Contains authorization information</param>
+        /// <param name="requirement">An instance of a custom requirement/>
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleRequirement requirement)
         {
             var user = context.User;
@@ -26,8 +35,6 @@ namespace SimpleAuthenticationAPI.Services.Authorization
                 context.Fail();
                 return;
             }
-               
-               
 
             if (!attribute.Roles.Contains((Role)currentRole))
             {
