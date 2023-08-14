@@ -27,5 +27,9 @@ namespace SimpleAuthenticationAPI.Services.Repositories
         /// <param name="email">Email of the user</param>
         /// <returns>A user if it's exists</returns>
         Task<User> GetUserByEmail(string email);
+
+        Task<User> GetUserById(Guid userId);
+
+        IEnumerable<User> GetUsersRoleType();
     }
 }

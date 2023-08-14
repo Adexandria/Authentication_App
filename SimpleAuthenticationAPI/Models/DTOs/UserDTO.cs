@@ -1,7 +1,7 @@
 ﻿namespace SimpleAuthenticationAPI.Models.DTOs
 {
     /// <summary>
-    /// An object used to display user data
+    /// An object used to display user details
     /// </summary>
     public class UserDTO
     {
@@ -10,21 +10,21 @@
         /// </summary>
         /// <param name="firstName">First name of the user</param>
         /// <param name="lastName">Last name of the user</param>
-        /// <param name="accessToken">Access token</param>
-        public UserDTO(string firstName, string lastName, string accessToken)
+        /// <param name="email">Email address of the user</param>
+
+        public UserDTO(string firstName, string lastName, string email)
         {
             Name = $"{firstName} {lastName}";
-            AccessToken = accessToken;
+            Email = email;
         }
-
         /// <summary>
         /// First name and last name of the user
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Access token generated for the user
+        /// Email address of the user
         /// </summary>
-        public string AccessToken { get; set; }
+        public string Email { get; set; }
     }
 }

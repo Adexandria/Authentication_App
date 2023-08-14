@@ -53,6 +53,18 @@ namespace SimpleAuthenticationAPI.Services.Repositories
                 FirstOrDefaultAsync(s => s.Email == email);
         }
 
+        public async Task<User> GetUserById(Guid userId)
+        {
+            return await _db.Users.
+                AsNoTracking().
+                FirstOrDefaultAsync(s => s.Id == userId);
+        }
+
+        public IEnumerable<User> GetUsersRoleType()
+        {
+            return _db.Users.AsNoTracking().Where(s=>s.Role == Role.User).ToList();
+        }
+
         private readonly AppDbContext _db;
     }
 }
