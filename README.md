@@ -18,4 +18,4 @@ Authorisation is the process of determining what actions a user is allowed to pe
 
 Proceeding with the restaurant example, After the host has confirmed that your reservation was successful. The host will lead you to your assigned table. The table is one of the resources available to users. As a diner, you can order drinks and meals and pay your expenses.  Some resources like cooking and serving are not eligible to diners. This is process of limiting resources is called Authorisation.
 
-### [Learn More](https://github.com/Adexandria/Authentication_App/wiki)
+### [Learn More](https://github.com/Adexandria/Authentication_App/wiki/01.-Authentication)
