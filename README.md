@@ -1,5 +1,5 @@
 # Simple Authentication API
-This is a basic authentication API example that illustrates the functioning of authentication and authorisation within a .NET API. This particular API leverages JWT (JSON Web Tokens) and Entity Framework Core to enable user registration and authentication within the application.
+This is a basic authentication API example that illustrates the functioning of authentication and authorisation within a .NET API 6. This particular API leverages JWT (JSON Web Tokens) and Entity Framework Core to enable user registration and authentication within the application.
 
 ## Prerequisite
  - Basic Knowledge of .Net Web API 6.0
