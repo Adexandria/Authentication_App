@@ -1,6 +1,13 @@
 # Simple Authentication API
 This is a basic authentication API example that illustrates the functioning of authentication and authorisation within a .NET API. This particular API leverages JWT (JSON Web Tokens) and Entity Framework Core to enable user registration and authentication within the application.
 
+## Prerequisite
+ - Basic Knowledge of .Net Web API 6.0
+ - SOLID Principles
+ - Dependency Injection
+ - ORM e.g EF Core
+
+
 ## Key Concepts
 ### JWT (JSON Web Tokens)
 JSON Web Tokens are a compact, URL-safe means of representing claims to be transferred between two parties. In the context of authentication, JWTs are often used to securely transmit information between a client and a server. They consist of three parts: a header, a payload, and a signature.
