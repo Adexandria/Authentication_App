@@ -1,4 +1,7 @@
 # Simple Authentication API
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4832465356b442f281bb05fb7e4100c8)](https://app.codacy.com/gh/Adexandria/Authentication_App?utm_source=github.com&utm_medium=referral&utm_content=Adexandria/Authentication_App&utm_campaign=Badge_Grade)
+
 This is a basic authentication API example that illustrates the functioning of authentication and authorisation within a .NET API 6. This particular API leverages JWT (JSON Web Tokens) and Entity Framework Core to enable user registration and authentication within the application.
 
 ## Prerequisite
